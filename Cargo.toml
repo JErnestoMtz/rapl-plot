@@ -1,0 +1,32 @@
+[package]
+name = "rapl-plot"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Plotting for rapl arrays."
+readme = "README.md"
+repository = "https://github.com/JErnestoMtz/rapl-plot"
+license = "MIT"
+keywords = ["plot", "plotting", "svg", "visualization", "ndarray"]
+categories = ["visualization", "science"]
+
+[dependencies]
+# Git dependency; the exact revision is pinned in Cargo.lock
+# (`cargo update -p rapl` to bump). Switch to a crates.io version before
+# publishing.
+rapl = { git = "https://github.com/JErnestoMtz/rapl" }
+resvg = { version = "0.48", optional = true, default-features = false, features = ["text", "system-fonts"] }
+
+[features]
+# PNG output (`Figure::to_png`, `save("plot.png")`), rasterised with resvg.
+png = ["dep:resvg"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }

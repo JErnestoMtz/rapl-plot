@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+  RUSTDOCFLAGS: -D warnings
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      # PNG text is drawn with system fonts.
+      - run: sudo apt-get update && sudo apt-get install -y fonts-dejavu-core
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets --locked
+      - run: cargo clippy --all-targets --all-features --locked
+      - run: cargo test --locked
+      - run: cargo test --all-features --locked
+      - run: cargo doc --no-deps --all-features --locked
+
+  msrv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.85
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --all-features --locked
+
+  # Early warning that the next dependency bump will break the build.
+  latest-deps:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: sudo apt-get update && sudo apt-get install -y fonts-dejavu-core
+      - run: cargo update
+      - run: cargo test --all-features
