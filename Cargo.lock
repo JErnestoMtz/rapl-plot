@@ -280,7 +280,8 @@ dependencies = [
 [[package]]
 name = "rapl"
 version = "0.4.0"
-source = "git+https://github.com/JErnestoMtz/rapl#3ecdba2075127c0242abf16de1dae2937cd82edc"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "50fd2dcf811f36641ff90a1a2b1eb77f702dbe01042766047a10ac01101a89ac"
 dependencies = [
  "generic-array",
  "num-traits",

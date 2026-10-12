@@ -9,12 +9,10 @@ repository = "https://github.com/JErnestoMtz/rapl-plot"
 license = "MIT"
 keywords = ["plot", "plotting", "svg", "visualization", "ndarray"]
 categories = ["visualization", "science"]
+exclude = [".github/"]
 
 [dependencies]
-# Git dependency; the exact revision is pinned in Cargo.lock
-# (`cargo update -p rapl` to bump). Switch to a crates.io version before
-# publishing.
-rapl = { git = "https://github.com/JErnestoMtz/rapl" }
+rapl = "0.4"
 resvg = { version = "0.48", optional = true, default-features = false, features = ["text", "system-fonts"] }
 
 [features]

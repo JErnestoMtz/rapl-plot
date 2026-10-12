@@ -34,14 +34,19 @@ The picture is `cargo run --example lines`, which also layers a `scatter`.
 
 > `rapl-plot` is in early development and the API will change.
 
+## Getting started
+
+```sh
+cargo add rapl rapl-plot
+# or, with PNG output:
+cargo add rapl rapl-plot --features rapl-plot/png
+```
+
 ## PNG
 
-SVG needs no dependencies. PNG is behind a feature, which pulls in
-[resvg](https://github.com/linebender/resvg) to rasterise the same SVG:
-
-```toml
-rapl-plot = { git = "https://github.com/JErnestoMtz/rapl-plot", features = ["png"] }
-```
+SVG needs no dependencies beyond rapl. PNG is behind the `png` feature,
+which pulls in [resvg](https://github.com/linebender/resvg) to rasterise the
+same SVG.
 
 ```rust
 plot.save("waves.png")?;                               // 2x the figure size
@@ -95,7 +100,6 @@ cargo test --all-features           # the same plus PNG output
 cargo clippy --all-targets --all-features
 cargo run --example lines           # writes lines.svg
 cargo run --example gallery         # writes gallery_*.svg
-cargo update -p rapl                # bump the pinned rapl revision
 ```
 
 ## License
